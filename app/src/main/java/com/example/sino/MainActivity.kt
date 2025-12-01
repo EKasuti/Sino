@@ -7,10 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
+import androidx.navigation3.scene.rememberSceneSetupNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
+import com.example.sino.navigation.HomeScreenRoute
+import com.example.sino.navigation.HistoryScreenRoute
+import com.example.sino.ui.screen.HistoryScreen
+import com.example.sino.ui.screen.HomeScreen
 import com.example.sino.ui.theme.SinoTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SinoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
+                    NavGraph(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -29,10 +37,27 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
-    Text(
-        text = "Sino",
-        modifier = modifier
+fun NavGraph(modifier: Modifier) {
+    val backStack = rememberNavBackStack(HomeScreenRoute)
+
+    NavDisplay(
+        modifier = modifier,
+        backStack = backStack,
+        onBack = {backStack.removeLastOrNull()},
+        entryDecorators = listOf(
+            rememberSceneSetupNavEntryDecorator(),
+            rememberSavedStateNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
+        entryProvider  = entryProvider {
+            entry<HomeScreenRoute> {
+                HomeScreen()
+            }
+            entry<HistoryScreenRoute> {
+                HistoryScreen()
+            }
+        }
     )
 }

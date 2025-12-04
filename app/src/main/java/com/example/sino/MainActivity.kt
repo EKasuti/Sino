@@ -45,7 +45,7 @@ fun NavGraph(modifier: Modifier) {
     NavDisplay(
         modifier = modifier,
         backStack = backStack,
-        onBack = {backStack.removeLastOrNull()},
+        onBack = { backStack.removeLastOrNull() },
         entryDecorators = listOf(
             rememberSceneSetupNavEntryDecorator(),
             rememberSavedStateNavEntryDecorator(),

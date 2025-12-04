@@ -6,7 +6,8 @@ import androidx.compose.ui.graphics.Color
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
 
-// Wellness State Colors
+// Stress Colors
+val Stressed = Color(0xFFF44336) // Red
 val Tense = Color(0xFFFF9800) // Orange
 val Balanced = Color(0xFFFFC107) // Amber
 val Relaxed = Color(0xFF4CAF50) // Green

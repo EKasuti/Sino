@@ -62,10 +62,10 @@ fun WellnessScoreCard(score: Float) {
 
     // Determine state and color based on score ranges
     val (state, color) = when {
-        score <= 3f -> stringResource(R.string.stressed) to Stressed
-        score <= 5f -> stringResource(R.string.tense) to Tense
-        score <= 7f -> stringResource(R.string.balanced) to Balanced
-        score <= 9f -> stringResource(R.string.relaxed) to Relaxed
+        score < 3f -> stringResource(R.string.stressed) to Stressed
+        score < 5f -> stringResource(R.string.tense) to Tense
+        score < 7f -> stringResource(R.string.balanced) to Balanced
+        score < 9f -> stringResource(R.string.relaxed) to Relaxed
         else -> stringResource(R.string.excellent) to Excellent
     }
 

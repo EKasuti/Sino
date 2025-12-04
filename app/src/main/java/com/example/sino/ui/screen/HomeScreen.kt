@@ -22,6 +22,7 @@ import com.example.sino.R
 import com.example.sino.ui.theme.Balanced
 import com.example.sino.ui.theme.Excellent
 import com.example.sino.ui.theme.Relaxed
+import com.example.sino.ui.theme.Stressed
 import com.example.sino.ui.theme.Tense
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +51,7 @@ fun HomeScreen() {
         // Wellness Score Card
         // TODO: Replace the score once api from data science is live
         WellnessScoreCard(
-            score = 9.1f,
+            score = 7.5f,
         )
     }
 }
@@ -61,7 +62,7 @@ fun WellnessScoreCard(score: Float) {
 
     // Determine state and color based on score ranges
     val (state, color) = when {
-        score <= 3f -> stringResource(R.string.stressed) to colorScheme.error
+        score <= 3f -> stringResource(R.string.stressed) to Stressed
         score <= 5f -> stringResource(R.string.tense) to Tense
         score <= 7f -> stringResource(R.string.balanced) to Balanced
         score <= 9f -> stringResource(R.string.relaxed) to Relaxed

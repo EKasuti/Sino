@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Sino</string>
+    <string name="profile">Profile</string>
+    <string name="stressed">Stressed</string>
+    <string name="tense">Tense</string>
+    <string name="balanced">Balanced</string>
+    <string name="relaxed">Relaxed</string>
+    <string name="excellent">Excellent</string>
 </resources>

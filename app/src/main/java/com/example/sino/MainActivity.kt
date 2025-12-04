@@ -51,7 +51,7 @@ fun NavGraph(modifier: Modifier) {
             rememberSavedStateNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator()
         ),
-        entryProvider  = entryProvider {
+        entryProvider = entryProvider {
             entry<HomeScreenRoute> {
                 HomeScreen()
             }

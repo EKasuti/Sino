@@ -8,17 +8,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Spa
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.sino.ui.components.MetricCards
 import com.example.sino.ui.components.SinoTopAppBar
 import com.example.sino.ui.components.WellnessScoreCard
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onVisualizationScreen: () -> Unit,
@@ -37,56 +35,50 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(
-            onClick = { onVisualizationScreen()},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorScheme.secondary
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Person,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Live Visualization",
-                style = typography.titleMedium,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        NavigationButton(
+            text = "Live Visualization",
+            icon = Icons.Outlined.Person,
+            onClick = onVisualizationScreen
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = { onBreathingExercisesScreen() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorScheme.secondary
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Spa,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Breathing Exercises",
-                style = typography.titleMedium,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-
+        NavigationButton(
+            text = "Breathing Exercises",
+            icon = Icons.Outlined.Spa,
+            onClick = onBreathingExercisesScreen
+        )
         Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Composable
+private fun NavigationButton(
+    text: String,
+    icon: ImageVector,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .height(56.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        )
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }

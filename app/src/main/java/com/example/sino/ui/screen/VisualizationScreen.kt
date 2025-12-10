@@ -8,13 +8,12 @@ import androidx.compose.ui.Modifier
 import com.example.sino.ui.components.SinoTopAppBar
 
 @Composable
-fun VisualizationScreen() {
+fun VisualizationScreen(onNavigateBack: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        // Top Bar
-        SinoTopAppBar()
+        SinoTopAppBar(showBackButton = true, onBack = onNavigateBack)
     }
 }

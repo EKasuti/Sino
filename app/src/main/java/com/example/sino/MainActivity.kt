@@ -15,10 +15,12 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.scene.rememberSceneSetupNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.example.sino.navigation.BreathingExercisesScreenRoute
 import com.example.sino.navigation.HomeScreenRoute
 import com.example.sino.navigation.VisualizationScreenRoute
-import com.example.sino.ui.screen.VisualizationScreen
+import com.example.sino.ui.screen.BreathingExercisesScreen
 import com.example.sino.ui.screen.HomeScreen
+import com.example.sino.ui.screen.VisualizationScreen
 import com.example.sino.ui.theme.SinoTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,7 +38,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun NavGraph(modifier: Modifier) {
@@ -56,11 +57,21 @@ fun NavGraph(modifier: Modifier) {
                 HomeScreen(
                     onVisualizationScreen = {
                         backStack.add(VisualizationScreenRoute)
+                    },
+                    onBreathingExercisesScreen = {
+                        backStack.add(BreathingExercisesScreenRoute)
                     }
                 )
             }
-            entry< VisualizationScreenRoute> {
+            entry<VisualizationScreenRoute> {
                 VisualizationScreen()
+            }
+            entry<BreathingExercisesScreenRoute> {
+                BreathingExercisesScreen(
+                    onNavigateBack = {
+                        backStack.removeLastOrNull()
+                    }
+                )
             }
         }
     )

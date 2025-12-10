@@ -11,8 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -26,6 +26,8 @@ fun BreathingExercisesScreen(onNavigateBack: () -> Unit) {
         targetValue = sweepAngle,
         animationSpec = tween(durationMillis = 4000)
     )
+
+    val primaryColor = colorScheme.primary
 
     LaunchedEffect(Unit) {
         repeat(2) {
@@ -52,7 +54,7 @@ fun BreathingExercisesScreen(onNavigateBack: () -> Unit) {
     ) {
         Canvas(modifier = Modifier.size(300.dp)) {
             drawArc(
-                color = MaterialTheme.colorScheme.primary,
+                color = primaryColor,
                 startAngle = -90f,
                 sweepAngle = animatedSweepAngle,
                 useCenter = false,

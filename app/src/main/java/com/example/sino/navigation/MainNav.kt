@@ -7,4 +7,4 @@ import kotlinx.serialization.Serializable
 data object HomeScreenRoute: NavKey
 
 @Serializable
-data object HistoryScreenRoute: NavKey
+data object VisualizationScreenRoute: NavKey

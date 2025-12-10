@@ -15,6 +15,9 @@ private val DarkColorScheme = darkColorScheme(
     background = DarkGrayBackground,
     surface = DarkCardBackground,
     onBackground = White,
+    onPrimary = White,
+    onSecondary = White,
+    onSurface = White,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -22,6 +25,9 @@ private val LightColorScheme = lightColorScheme(
     background = LightGrayBackground,
     surface = LightCardBackground,
     onBackground = Black,
+    onPrimary = White,
+    onSecondary = White,
+    onSurface = Black,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

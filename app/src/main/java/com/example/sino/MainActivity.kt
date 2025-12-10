@@ -16,8 +16,8 @@ import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.scene.rememberSceneSetupNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.example.sino.navigation.HomeScreenRoute
-import com.example.sino.navigation.HistoryScreenRoute
-import com.example.sino.ui.screen.HistoryScreen
+import com.example.sino.navigation.VisualizationScreenRoute
+import com.example.sino.ui.screen.VisualizationScreen
 import com.example.sino.ui.screen.HomeScreen
 import com.example.sino.ui.theme.SinoTheme
 
@@ -53,10 +53,14 @@ fun NavGraph(modifier: Modifier) {
         ),
         entryProvider = entryProvider {
             entry<HomeScreenRoute> {
-                HomeScreen()
+                HomeScreen(
+                    onVisualizationScreen = {
+                        backStack.add(VisualizationScreenRoute)
+                    }
+                )
             }
-            entry<HistoryScreenRoute> {
-                HistoryScreen()
+            entry< VisualizationScreenRoute> {
+                VisualizationScreen()
             }
         }
     )

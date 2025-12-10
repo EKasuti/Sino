@@ -5,8 +5,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
-//import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -21,6 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sino.R
 import com.example.sino.ui.components.WellnessScoreCard
+import com.example.sino.ui.theme.MetricBlue
+import com.example.sino.ui.theme.MetricCyan
+import com.example.sino.ui.theme.MetricGreen
+import com.example.sino.ui.theme.MetricRed
+import com.example.sino.ui.components.SinoTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,32 +36,14 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
     ) {
         // Top Bar
-        TopAppBar(
-            modifier = Modifier.height(64.dp),
-            windowInsets = WindowInsets(0.dp),
-            title = { Text(text = stringResource(R.string.app_name)) },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = colorScheme.background
-            ),
-            actions = {
-                IconButton(onClick = {  }) {
-                    Icon(Icons.Outlined.AccountCircle,  contentDescription = stringResource(R.string.profile))
-                }
-            }
-        )
-
-        Spacer(Modifier.height(4.dp))
+        SinoTopAppBar()
 
         // Wellness Score Card
-        WellnessScoreCard(
-            score = 7.5f,
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
+        WellnessScoreCard(score = 7.5f)
 
         // Current Metrics Header
         Text(
-            text = "Current Metrics",
+            text = stringResource(R.string.current_metrics),
             style = typography.titleLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -78,17 +63,17 @@ fun HomeScreen(
             ) {
                 MetricCard(
                     modifier = Modifier.weight(1f),
-                    title = "Heart Rate",
+                    title = stringResource(R.string.heart_rate),
                     value = "73",
-                    unit = "bpm",
-                    valueColor = Color(0xFFD9534F) // Red
+                    unit = stringResource(R.string.heart_rate_unit),
+                    valueColor = MetricRed // Red
                 )
                 MetricCard(
                     modifier = Modifier.weight(1f),
-                    title = "Heart Rate\nVariability",
+                    title = stringResource(R.string.heart_rate_variability),
                     value = "44",
-                    unit = "ms",
-                    valueColor = Color(0xFF5CB85C) // Green
+                    unit = stringResource(R.string.heart_rate_variability_unit),
+                    valueColor = MetricGreen // Green
                 )
             }
 
@@ -99,17 +84,17 @@ fun HomeScreen(
             ) {
                 MetricCard(
                     modifier = Modifier.weight(1f),
-                    title = "Electrodermal\nActivity",
+                    title = stringResource(R.string.electrodermal_activity),
                     value = "2.0",
-                    unit = "µS",
-                    valueColor = Color(0xFF0277BD) // Blue color
+                    unit = stringResource(R.string.electrodermal_activity_unit),
+                    valueColor = MetricBlue // Blue
                 )
                 MetricCard(
                     modifier = Modifier.weight(1f),
-                    title = "Temperature",
+                    title = stringResource(R.string.temperature),
                     value = "36.8",
-                    unit = "°C",
-                    valueColor = Color(0xFF00ACC1) // Cyan color
+                    unit = stringResource(R.string.temperature_unit),
+                    valueColor = MetricCyan // Cyan color
                 )
             }
         }
@@ -125,7 +110,7 @@ fun HomeScreen(
                 .height(56.dp),
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF1976D2) 
+                containerColor = colorScheme.secondary
             )
         ) {
             Icon(
@@ -154,22 +139,22 @@ fun MetricCard(
     valueColor: Color
 ) {
     Card(
-        modifier = modifier.aspectRatio(1f),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        modifier = modifier.height(140.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.Start
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = title,
                 style = typography.bodyMedium,
-                color = Color.Gray
+                color = Color.Gray,
+                maxLines = 2
             )
 
             Row(
@@ -177,14 +162,15 @@ fun MetricCard(
             ) {
                 Text(
                     text = value,
-                    fontSize = 32.sp,
+                    fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
-                    color = valueColor
+                    color = valueColor,
+                    lineHeight = 36.sp
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = unit,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     color = Color.Gray,
                     modifier = Modifier.padding(bottom = 2.dp)
                 )

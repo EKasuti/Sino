@@ -8,3 +8,6 @@ data object HomeScreenRoute: NavKey
 
 @Serializable
 data object VisualizationScreenRoute: NavKey
+
+@Serializable
+data object BreathingExercisesScreenRoute: NavKey

@@ -9,8 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
@@ -46,10 +46,12 @@ fun BreathingExercisesScreen(
         label = "Breathing Animation"
     )
 
+    val primaryColor = colorScheme.primary
+
     LaunchedEffect(Unit) {
         delay(GET_READY_DELAY_MS)
-        
-        repeat(repetitions) {
+
+        repeat(repetitions) { repetition ->
             instruction = "Breathe in..."
             sweepAngle = MAX_SWEEP_ANGLE
             for (i in EXERCISE_INTERVAL_S downTo 1) {
@@ -69,6 +71,14 @@ fun BreathingExercisesScreen(
                 countdown = i
                 delay(COUNTDOWN_INTERVAL_MS)
             }
+
+            if (repetition < repetitions - 1) {
+                instruction = "Hold"
+                for (i in EXERCISE_INTERVAL_S downTo 1) {
+                    countdown = i
+                    delay(COUNTDOWN_INTERVAL_MS)
+                }
+            }
         }
 
         instruction = "Good job!"
@@ -78,29 +88,45 @@ fun BreathingExercisesScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SinoTopAppBar(showBackButton = true, onBack = onNavigateBack)
+        SinoTopAppBar(
+            screenName = "Breathing Exercises",
+            showBackButton = true,
+            onBack = onNavigateBack
+        )
+
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             Canvas(modifier = Modifier.size(CIRCLE_DIAMETER.dp)) {
                 drawArc(
-                    color = Color.Blue,
+                    color = primaryColor,
                     startAngle = START_ANGLE,
                     sweepAngle = animatedSweepAngle,
                     useCenter = false,
-                    style = Stroke(width = CIRCLE_STROKE_WIDTH.dp.toPx(), cap = StrokeCap.Round)
+                    style = Stroke(
+                        width = CIRCLE_STROKE_WIDTH.dp.toPx(),
+                        cap = StrokeCap.Round
+                    )
                 )
             }
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
             ) {
-                Text(text = instruction, style = MaterialTheme.typography.headlineLarge)
+                Text(
+                    text = instruction,
+                    style = MaterialTheme.typography.headlineLarge
+                )
                 if (countdown > 0) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = countdown.toString(), style = MaterialTheme.typography.displayMedium)
+                    Text(
+                        text = countdown.toString(),
+                        style = MaterialTheme.typography.displayMedium
+                    )
                 }
             }
         }

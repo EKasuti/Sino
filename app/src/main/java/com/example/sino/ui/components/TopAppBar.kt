@@ -16,6 +16,7 @@ import com.example.sino.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SinoTopAppBar(
+    screenName: String,
     showBackButton: Boolean = false,
     onBack: () -> Unit = {}
 ) {
@@ -30,7 +31,7 @@ fun SinoTopAppBar(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxHeight()
             ) {
-                Text(text = stringResource(R.string.app_name))
+                Text(screenName)
             }
         },
         navigationIcon = {

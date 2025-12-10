@@ -39,38 +39,42 @@ fun WellnessScoreCard(score: Float) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.1f)
-            .padding(8.dp),
+            .padding(vertical = 32.dp, horizontal = 16.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Background circle (track)
-        CircularProgressIndicator(
-            progress = { 1f },
-            strokeWidth = 24.dp,
-            modifier = Modifier.fillMaxSize(0.8f),
-            color = colorScheme.surfaceVariant,
-            trackColor = Color.Transparent
-        )
-
-        // Foreground circle (actual progress)
-        CircularProgressIndicator(
-            progress = { progress },
-            strokeWidth = 24.dp,
-            modifier = Modifier.fillMaxSize(0.8f),
-            color = color,
-            trackColor = Color.Transparent
-        )
-
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = score.toString(),
-                style = MaterialTheme.typography.displayLarge
+        Box(
+            modifier = Modifier.fillMaxWidth(0.7f).aspectRatio(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            // Background circle (track)
+            CircularProgressIndicator(
+                progress = { 1f },
+                strokeWidth = 16.dp,
+                modifier = Modifier.fillMaxSize(),
+                color = colorScheme.surfaceVariant,
+                trackColor = Color.Transparent
             )
-            Text(
-                text = state,
-                style = MaterialTheme.typography.titleMedium,
-                color = color
+
+            // Foreground circle (actual progress)
+            CircularProgressIndicator(
+                progress = { progress },
+                strokeWidth = 16.dp,
+                modifier = Modifier.fillMaxSize(),
+                color = color,
+                trackColor = Color.Transparent
             )
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = score.toString(),
+                    style = MaterialTheme.typography.displayLarge
+                )
+                Text(
+                    text = state,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = color
+                )
+            }
         }
     }
 }

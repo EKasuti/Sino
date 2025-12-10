@@ -11,8 +11,10 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.sino.R
 import com.example.sino.ui.components.MetricCards
 import com.example.sino.ui.components.WellnessScoreCard
 import com.example.sino.ui.components.SinoTopAppBar
@@ -28,7 +30,9 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
     ) {
         // Top Bar
-        SinoTopAppBar()
+        SinoTopAppBar(
+            screenName = stringResource(R.string.app_name)
+        )
 
         // Wellness Score Card
         WellnessScoreCard(score = 7.5f)

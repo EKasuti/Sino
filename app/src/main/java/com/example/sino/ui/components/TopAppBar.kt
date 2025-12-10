@@ -23,7 +23,9 @@ import com.example.sino.R
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun SinoTopAppBar() {
+fun SinoTopAppBar(
+    screenName : String
+) {
     TopAppBar(
         modifier = Modifier.height(64.dp),
         windowInsets = WindowInsets(0.dp),
@@ -35,7 +37,7 @@ fun SinoTopAppBar() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxHeight()
             ) {
-                Text(text = stringResource(R.string.app_name))
+                Text(screenName)
             }
         },
         actions = {

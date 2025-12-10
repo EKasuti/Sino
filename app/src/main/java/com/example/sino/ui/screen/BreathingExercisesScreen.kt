@@ -52,7 +52,7 @@ fun BreathingExercisesScreen(onNavigateBack: () -> Unit) {
     ) {
         Canvas(modifier = Modifier.size(300.dp)) {
             drawArc(
-                color = Color.Blue,
+                color = MaterialTheme.colorScheme.primary,
                 startAngle = -90f,
                 sweepAngle = animatedSweepAngle,
                 useCenter = false,

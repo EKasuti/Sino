@@ -18,7 +18,7 @@ import com.example.sino.ui.components.SinoTopAppBar
 import com.example.sino.ui.theme.*
 
 @Composable
-fun VisualizationScreen() {
+fun VisualizationScreen(onNavigateBack: () -> Unit) {
     val context = LocalContext.current
     val viewModel: PhysiologicalViewModel = viewModel(
         factory = PhysiologicalViewModel.provideFactory(context)

@@ -64,7 +64,11 @@ fun NavGraph(modifier: Modifier) {
                 )
             }
             entry<VisualizationScreenRoute> {
-                VisualizationScreen()
+                VisualizationScreen(
+                    onNavigateBack = {
+                        backStack.removeLastOrNull()
+                    }
+                )
             }
             entry<BreathingExercisesScreenRoute> {
                 BreathingExercisesScreen(

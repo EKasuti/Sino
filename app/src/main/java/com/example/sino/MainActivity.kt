@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,8 +28,10 @@ import com.example.sino.navigation.VisualizationScreenRoute
 import com.example.sino.ui.screen.BreathingExercisesScreen
 import com.example.sino.ui.screen.HomeScreen
 import com.example.sino.ui.screen.PhysiologicalViewModel
+import com.example.sino.ui.screen.SplashScreen
 import com.example.sino.ui.screen.VisualizationScreen
 import com.example.sino.ui.theme.SinoTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +39,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SinoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavGraph(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                var showSplash by remember { mutableStateOf(true) }
+
+                LaunchedEffect(Unit) {
+                    delay(3000)
+                    showSplash = false
+                }
+
+                if (showSplash) {
+                    SplashScreen()
+                } else {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        NavGraph(
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.sino.ui.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
@@ -35,6 +36,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val viewModel: PhysiologicalViewModel = viewModel(
+        viewModelStoreOwner = context as ComponentActivity,
         factory = PhysiologicalViewModel.provideFactory(context)
     )
 

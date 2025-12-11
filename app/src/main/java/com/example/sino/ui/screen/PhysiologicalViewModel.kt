@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.sino.data.PhysiologicalData
 import com.example.sino.data.PhysiologicalDataRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 class PhysiologicalViewModel(private val repository: PhysiologicalDataRepository) : ViewModel() {
 
@@ -24,6 +26,8 @@ class PhysiologicalViewModel(private val repository: PhysiologicalDataRepository
     private val _currentStressScore = MutableStateFlow(0f)
     val currentStressScore = _currentStressScore.asStateFlow()
 
+    private var animationJob: Job? = null
+
     init {
         viewModelScope.launch {
             repository.loadPhysiologicalData().collect { data ->
@@ -36,15 +40,22 @@ class PhysiologicalViewModel(private val repository: PhysiologicalDataRepository
         }
     }
 
+    fun restartAnimation() {
+        if (_allData.value.isNotEmpty()) {
+            startAutoReplayAnimation()
+        }
+    }
+
     private fun startAutoReplayAnimation() {
-        viewModelScope.launch {
-            while (true) { // Infinite loop for auto-replay
+        animationJob?.cancel()
+        animationJob = viewModelScope.launch {
+            while (isActive) { // Infinite loop for auto-replay
                 val maxTime = _allData.value.maxOfOrNull { it.tRel } ?: 0f
                 
                 // Reset to beginning
                 var currentTime = 0f
                 
-                while (currentTime <= maxTime) {
+                while (currentTime <= maxTime && isActive) {
                     _currentSecond.value = currentTime
                     
                     // Get all data points up to current second

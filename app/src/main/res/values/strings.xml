@@ -16,4 +16,8 @@
     <string name="heart_rate_unit">bpm</string>
     <string name="current_metrics">Current Metrics</string>
     <string name="back">Back</string>
+    <string name="live_metrics">Live Metrics</string>
+    <string name="visualize">Visualize</string>
+    <string name="visualization">Visualization</string>
+    <string name="breathing_exercises">Breath Exercises</string>
 </resources>

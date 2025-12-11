@@ -91,7 +91,8 @@ fun BreathingExercisesScreen(
         SinoTopAppBar(
             screenName = "Breathing Exercises",
             showBackButton = true,
-            onBack = onNavigateBack
+            onBack = onNavigateBack,
+            showBreathingIcon = false
         )
 
         Box(

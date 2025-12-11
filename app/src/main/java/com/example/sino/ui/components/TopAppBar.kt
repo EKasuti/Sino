@@ -3,7 +3,7 @@ package com.example.sino.ui.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Spa
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
@@ -18,7 +18,9 @@ import com.example.sino.R
 fun SinoTopAppBar(
     screenName: String,
     showBackButton: Boolean = false,
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {},
+    showBreathingIcon: Boolean = true,
+    onBreathingExercisesClick: () -> Unit = {}
 ) {
     TopAppBar(
         modifier = Modifier.height(64.dp),
@@ -45,14 +47,11 @@ fun SinoTopAppBar(
             }
         },
         actions = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxHeight()
-            ) {
-                IconButton(onClick = { }) {
+            if (showBreathingIcon) {
+                IconButton(onClick = onBreathingExercisesClick) {
                     Icon(
-                        Icons.Outlined.Settings,
-                        contentDescription = stringResource(R.string.settings)
+                        Icons.Outlined.Spa,
+                        contentDescription = stringResource(R.string.breathing_exercises)
                     )
                 }
             }

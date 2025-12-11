@@ -1,11 +1,12 @@
 package com.example.sino.ui.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.MonitorHeart
 import androidx.compose.material.icons.outlined.Spa
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.typography
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sino.R
-import com.example.sino.ui.components.MultiMetricChart
 import com.example.sino.ui.components.SinoTopAppBar
 import com.example.sino.ui.components.WellnessScoreCard
 import com.example.sino.ui.theme.*
@@ -37,17 +37,17 @@ fun HomeScreen(
     val viewModel: PhysiologicalViewModel = viewModel(
         factory = PhysiologicalViewModel.provideFactory(context)
     )
-    
+
     val currentData = viewModel.currentDataUpToSecond.collectAsState().value
     val stressScore = viewModel.currentStressScore.collectAsState().value
-    
+
     // Get the latest values from current data
     val latestData = currentData.lastOrNull()
     val heartRate = latestData?.hrBpm ?: 0f
     val temperature = latestData?.tempSmooth ?: 0f
     val eda = latestData?.edaClean ?: 0f
     val bvp = latestData?.bvpClean ?: 0f
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,18 +55,43 @@ fun HomeScreen(
     ) {
         // Top Bar
         SinoTopAppBar(
-            screenName = stringResource(R.string.app_name)
+            screenName = stringResource(R.string.app_name),
+            onBreathingExercisesClick = onBreathingExercisesScreen
         )
 
         WellnessScoreCard(score = stressScore)
 
-        // Live Metrics Cards
-        Text(
-            text = "Live Metrics",
-            style = typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
+        // Live Metrics Header
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.live_metrics),
+                style = typography.titleLarge,
+                fontWeight = FontWeight.Bold
+            )
+
+            FilledTonalButton(
+                onClick = { onVisualizationScreen() },
+                shape = RoundedCornerShape(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.MonitorHeart,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = stringResource(R.string.visualize),
+                    style = typography.titleMedium
+                )
+            }
+        }
 
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -116,70 +141,6 @@ fun HomeScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        // Mini Charts Section
-        Text(
-            text = "Live Trends",
-            style = typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
-
-        // Mini key metrics charts
-        val miniMetrics = listOf(
-            "Heart Rate" to MetricRed,
-            "Temperature" to MetricCyan,
-            "EDA Clean" to MetricBlue
-        )
-
-        miniMetrics.forEach { (metricName, color) ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorScheme.surface
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Box(modifier = Modifier.padding(16.dp)) {
-                    MultiMetricChart(
-                        data = currentData,
-                        metric = metricName,
-                        lineColor = color,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = { onVisualizationScreen()},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorScheme.secondary
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Person,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Live Visualization",
-                style = typography.titleMedium,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         NavigationButton(
@@ -205,7 +166,7 @@ private fun NavigationButton(
             .height(56.dp),
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = colorScheme.secondary
         )
     ) {
         Icon(
@@ -216,7 +177,7 @@ private fun NavigationButton(
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = text,
-            style = MaterialTheme.typography.titleMedium,
+            style = typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
     }
@@ -268,14 +229,5 @@ private fun LiveMetricCard(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun getStressColor(score: Float): Color {
-    return when {
-        score <= 2.0f -> Relaxed
-        score <= 4.0f -> Balanced
-        else -> Stressed
     }
 }

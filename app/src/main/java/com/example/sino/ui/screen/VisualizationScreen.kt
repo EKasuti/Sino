@@ -1,5 +1,6 @@
 package com.example.sino.ui.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,6 +27,7 @@ fun VisualizationScreen(
 ) {
     val context = LocalContext.current
     val viewModel: PhysiologicalViewModel = viewModel(
+        viewModelStoreOwner = context as ComponentActivity,
         factory = PhysiologicalViewModel.provideFactory(context)
     )
     

@@ -1,5 +1,6 @@
 package com.example.sino.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -36,6 +37,8 @@ fun BreathingExercisesScreen(
     onNavigateBack: () -> Unit,
     repetitions: Int = 2
 ) {
+    BackHandler(onBack = onNavigateBack)
+
     var instruction by remember { mutableStateOf("Get ready...") }
     var countdown by remember { mutableStateOf(0) }
     var sweepAngle by remember { mutableStateOf(MIN_SWEEP_ANGLE) }

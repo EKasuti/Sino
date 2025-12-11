@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -20,6 +22,7 @@ import com.example.sino.navigation.HomeScreenRoute
 import com.example.sino.navigation.VisualizationScreenRoute
 import com.example.sino.ui.screen.BreathingExercisesScreen
 import com.example.sino.ui.screen.HomeScreen
+import com.example.sino.ui.screen.PhysiologicalViewModel
 import com.example.sino.ui.screen.VisualizationScreen
 import com.example.sino.ui.theme.SinoTheme
 
@@ -42,6 +45,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavGraph(modifier: Modifier) {
     val backStack = rememberNavBackStack(HomeScreenRoute)
+
+    val context = LocalContext.current
+    val viewModel: PhysiologicalViewModel = viewModel(
+        viewModelStoreOwner = context as ComponentActivity,
+        factory = PhysiologicalViewModel.provideFactory(context)
+    )
 
     NavDisplay(
         modifier = modifier,
@@ -76,6 +85,7 @@ fun NavGraph(modifier: Modifier) {
             entry<BreathingExercisesScreenRoute> {
                 BreathingExercisesScreen(
                     onNavigateBack = {
+                        viewModel.restartAnimation()
                         backStack.removeLastOrNull()
                     }
                 )

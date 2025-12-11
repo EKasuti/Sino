@@ -10,15 +10,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sino.R
 import com.example.sino.ui.components.MultiMetricChart
 import com.example.sino.ui.components.SinoTopAppBar
 import com.example.sino.ui.theme.*
 
 @Composable
-fun VisualizationScreen(onNavigateBack: () -> Unit) {
+fun VisualizationScreen(
+    onNavigateBack: () -> Unit,
+    onBreathingExercisesScreen: () -> Unit
+) {
     val context = LocalContext.current
     val viewModel: PhysiologicalViewModel = viewModel(
         factory = PhysiologicalViewModel.provideFactory(context)
@@ -36,7 +41,10 @@ fun VisualizationScreen(onNavigateBack: () -> Unit) {
     ) {
         // Top Bar
         SinoTopAppBar(
-            screenName = "Visualization"
+            screenName = stringResource(R.string.visualization),
+            showBackButton = true,
+            onBack = onNavigateBack,
+            onBreathingExercisesClick = onBreathingExercisesScreen
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -128,8 +136,10 @@ fun VisualizationScreen(onNavigateBack: () -> Unit) {
 @Composable
 private fun getStressColor(score: Float): Color {
     return when {
-        score <= 2.0f -> Relaxed
-        score <= 4.0f -> Balanced
+        score <3f ->  Excellent
+        score < 5f -> Relaxed
+        score < 7f -> Balanced
+        score < 9f -> Tense
         else -> Stressed
     }
 }
